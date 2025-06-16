@@ -1,7 +1,11 @@
 "use server";
 
+<<<<<<< HEAD
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+=======
+import prisma from "@/lib/prisma";
+>>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
 
 export async function Product(data) {
   // Accepts a data object and saves it as a new product
