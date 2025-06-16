@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Product } from "./action";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { generateDescription } from "./generateDescription";
+import { generateAnswer } from "@/lib/gemini";
 
 export default function Page() {
   const [form, setForm] = useState({
@@ -25,13 +25,37 @@ export default function Page() {
   }
 
   async function handleGenerateDescription() {
+    if (!form.productName) {
+      alert("Please enter a product name first");
+      return;
+    }
+
     setLoading(true);
-    const description = await generateDescription({
-      productName: form.productName,
-      productCategory: form.productCategory,
-    });
-    setForm((prev) => ({ ...prev, productDescription: description }));
-    setLoading(false);
+    try {
+      const response = await fetch("/api/generate-description", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productName: form.productName,
+          productCategory: form.productCategory,
+          productPrice: form.productPrice,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate description");
+      }
+
+      const data = await response.json();
+      setForm((prev) => ({ ...prev, productDescription: data.description }));
+    } catch (error) {
+      console.error("Error generating description:", error);
+      alert("Failed to generate description. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handleSubmit(e) {
@@ -63,6 +87,7 @@ export default function Page() {
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
             required
+            suppressHydrationWarning
           />
 
           <label>Product Price</label>
@@ -72,6 +97,7 @@ export default function Page() {
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
             required
+            suppressHydrationWarning
           />
 
           <label>Product Description</label>
@@ -82,6 +108,7 @@ export default function Page() {
               onChange={handleChange}
               className="border-2 rounded w-full p-1"
               required
+              suppressHydrationWarning
             />
             <button
               type="button"
@@ -99,6 +126,7 @@ export default function Page() {
             value={form.productImage}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
+            suppressHydrationWarning
           />
 
           <label>Product Category</label>
@@ -107,6 +135,7 @@ export default function Page() {
             value={form.productCategory}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
+            suppressHydrationWarning
           />
 
           <label>Product Stock</label>
@@ -115,6 +144,7 @@ export default function Page() {
             value={form.productStock}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
+            suppressHydrationWarning
           />
 
           <label>Product Rating</label>
@@ -123,6 +153,7 @@ export default function Page() {
             value={form.productRating}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
+            suppressHydrationWarning
           />
 
           <label>Product Review</label>
@@ -131,6 +162,7 @@ export default function Page() {
             value={form.productReview}
             onChange={handleChange}
             className="border-2 rounded w-full mb-4 p-1"
+            suppressHydrationWarning
           />
 
           <button
@@ -149,4 +181,3 @@ export default function Page() {
     </div>
   );
 }
-
