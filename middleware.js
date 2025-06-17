@@ -1,8 +1,7 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
 export default clerkMiddleware((auth, req) => {
-  // No specific permission-based protection applied to all routes.
-  // All authenticated users can access pages that are not explicitly public.
+  auth.protect();
 });
 
 export const config = {
