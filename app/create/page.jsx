@@ -95,6 +95,7 @@ export default function Page() {
 
           <label>Product Image</label>
           <input
+            type="file"
             name="productImage"
             value={form.productImage}
             onChange={handleChange}
