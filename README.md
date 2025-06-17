@@ -156,4 +156,7 @@ Visit the `/admin` page. Here you can:
 ---
 
 Feel free to contribute, report issues, or suggest improvements!
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
+
+
+<h1>Added Clerk Authentication </h1>
+
