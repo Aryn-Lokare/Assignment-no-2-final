@@ -3,11 +3,7 @@
 import { useState } from "react";
 import { Product } from "./action";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-<<<<<<< HEAD
 import { generateDescription } from "./generateDescription";
-=======
-import { generateAnswer } from "@/lib/gemini";
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
 
 export default function Page() {
   const [form, setForm] = useState({
@@ -29,7 +25,6 @@ export default function Page() {
   }
 
   async function handleGenerateDescription() {
-<<<<<<< HEAD
     setLoading(true);
     const description = await generateDescription({
       productName: form.productName,
@@ -37,39 +32,6 @@ export default function Page() {
     });
     setForm((prev) => ({ ...prev, productDescription: description }));
     setLoading(false);
-=======
-    if (!form.productName) {
-      alert("Please enter a product name first");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await fetch("/api/generate-description", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          productName: form.productName,
-          productCategory: form.productCategory,
-          productPrice: form.productPrice,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to generate description");
-      }
-
-      const data = await response.json();
-      setForm((prev) => ({ ...prev, productDescription: data.description }));
-    } catch (error) {
-      console.error("Error generating description:", error);
-      alert("Failed to generate description. Please try again.");
-    } finally {
-      setLoading(false);
-    }
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
   }
 
   async function handleSubmit(e) {
@@ -101,10 +63,6 @@ export default function Page() {
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
             required
-<<<<<<< HEAD
-=======
-            suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
           />
 
           <label>Product Price</label>
@@ -114,10 +72,6 @@ export default function Page() {
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
             required
-<<<<<<< HEAD
-=======
-            suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
           />
 
           <label>Product Description</label>
@@ -128,10 +82,6 @@ export default function Page() {
               onChange={handleChange}
               className="border-2 rounded w-full p-1"
               required
-<<<<<<< HEAD
-=======
-              suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
             />
             <button
               type="button"
@@ -149,10 +99,6 @@ export default function Page() {
             value={form.productImage}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
-<<<<<<< HEAD
-=======
-            suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
           />
 
           <label>Product Category</label>
@@ -161,10 +107,6 @@ export default function Page() {
             value={form.productCategory}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
-<<<<<<< HEAD
-=======
-            suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
           />
 
           <label>Product Stock</label>
@@ -173,10 +115,6 @@ export default function Page() {
             value={form.productStock}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
-<<<<<<< HEAD
-=======
-            suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
           />
 
           <label>Product Rating</label>
@@ -185,10 +123,6 @@ export default function Page() {
             value={form.productRating}
             onChange={handleChange}
             className="border-2 rounded w-full mb-2 p-1"
-<<<<<<< HEAD
-=======
-            suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
           />
 
           <label>Product Review</label>
@@ -197,29 +131,17 @@ export default function Page() {
             value={form.productReview}
             onChange={handleChange}
             className="border-2 rounded w-full mb-4 p-1"
-<<<<<<< HEAD
-=======
-            suppressHydrationWarning
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
           />
 
           <button
             type="submit"
             className="bg-blue-500 text-white p-2 rounded w-full"
+            disabled={loading}
           >
-            Add Product
+            {success ? "Product Added!" : "Add Product"}
           </button>
-          {success && (
-            <div className="text-green-600 text-center mt-2">
-              Product added successfully!
-            </div>
-          )}
         </form>
       </div>
     </div>
   );
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> fea49b0bfb8ec94b68dd5d326ebe0d0c70147af1
